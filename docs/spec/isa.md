@@ -7,12 +7,12 @@ Ký hiệu: ✍️ = **[Bạn viết]** (đọc manual rồi điền). 🤖 = Cl
 
 ## 1. Kiến trúc tóm tắt ✍️ (đọc §1)
 
-- Số thanh ghi đa dụng: TODO
-- Thanh ghi đặc biệt: TODO
+- Số thanh ghi đa dụng: 16
+- Thanh ghi đặc biệt: PC (program counter), SP (Stack Pointer) và FLAGS
 - Độ rộng 1 thanh ghi: TODO bit → giá trị không dấu từ TODO đến TODO
-- Kích thước mỗi lệnh: TODO byte; directive thì: TODO
-- Không gian địa chỉ: TODO → TODO; MMIO bắt đầu từ: TODO
-- SP ban đầu (xem trong game / README): TODO
+- Kích thước mỗi lệnh: 6 byte; directive thì: giống với số byte mà nó định nghĩa, không phải 6
+- Không gian địa chỉ: 0x0000 → 0xFFFF; MMIO bắt đầu từ: TODO
+- SP ban đầu (xem trong game / README): 0
 
 ## 2. Chế độ địa chỉ ✍️ (đọc §2)
 
