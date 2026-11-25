@@ -9,6 +9,10 @@ Trình mô phỏng máy tính 16-bit chạy ngoại tuyến trên Android. Bạn
 > - Project được **đồng phát triển cùng [Claude](https://claude.com/claude-code)** (Anthropic). Claude đóng vai senior developer, gợi ý và review. Phần lớn code chính do mình tự viết để học.
 > - Ý tưởng và hành vi máy ảo được tham khảo từ trò chơi lập trình assembly PlayASM. Mọi quyền với trò chơi gốc và tài liệu của nó thuộc về tác giả gốc.
 
+## Web demo
+
+Bản chạy thử trên trình duyệt: https://snoweee-star.github.io/mini-pc-simulator/ (tự cập nhật khi merge vào `main`, xem `.github/workflows/deploy-web-demo.yml`).
+
 ## Trạng thái
 
 🚧 Đang phát triển theo từng bước nhỏ. Kế hoạch nằm trong [docs/PLAN.md](docs/PLAN.md), tiến độ trong [docs/PROGRESS.md](docs/PROGRESS.md), mức tương thích với bản gốc trong [docs/parity.md](docs/parity.md).
