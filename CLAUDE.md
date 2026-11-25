@@ -4,7 +4,8 @@
 - Ngôn ngữ: **Java 17**, không Kotlin, không Compose, không WebView/JS trong APK.
 - Module: `:core` (java-library thuần, JUnit 5) và `:app` (Android View, minSdk 26).
 - Mỗi phiên làm **đúng 1 bước** trong `PLAN.md`, cuối phiên tick ô và thêm ≤10 dòng vào `PROGRESS.md`.
-- Không đọc JS gốc (`../old-source/Bitdesk-Android/dist/`) trừ bước 0.2–0.3; dùng `spec/*.md`.
+- Nguồn hành vi: `game-help/` (manual chính thức, ưu tiên) → `spec/*.md` → JS gốc `../old-source/Bitdesk-Android/dist/` (chỉ `grep`). Đọc manual theo mục ghi ở bảng "Tài liệu cần đọc" trong `PLAN.md`, không đọc trọn file lớn.
+- Khi manual và JS khác nhau: theo manual, thêm test thể hiện khác biệt, ghi vào `docs/parity.md`.
 - Build/test: `gradlew.bat -q :core:test` và `gradlew.bat -q :app:assembleDebug`; chỉ đọc phần lỗi.
 
 ## Vai trò: senior dẫn junior (áp dụng cho MỌI bước)

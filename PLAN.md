@@ -18,15 +18,35 @@ và chia mỗi mốc thành các bước nhỏ; **mỗi bước = 1 phiên Claud
 
 ## Quy tắc tiết kiệm token
 1. Mỗi phiên chỉ làm **1 bước** dưới đây; cuối phiên cập nhật `PROGRESS.md` (≤10 dòng mỗi bước).
-2. Chỉ đọc JS gốc ở **bước 0.2–0.3**; sau đó đọc `spec/*.md`.
+2. **Ưu tiên `game-help/`** (hướng dẫn chính thức của game, bằng chứng loại D/W). JS gốc chỉ dùng để tra chỗ manual không nói (mã opcode, mã hóa byte, thuật toán) — bằng `grep`, không đọc cả file.
+   Đọc manual **theo mục** (dùng số dòng ở bảng dưới), không đọc trọn file lớn (`voxel.md` 67 KB).
 3. Build/test với `-q`; chỉ đọc phần lỗi.
 4. Cách làm việc senior–junior (xem `CLAUDE.md`): bạn code, Claude hint theo bậc và review. Nhãn **[Bạn viết]** đánh dấu bước nên tự viết gần như 100%; các bước khác Claude có thể viết hạ tầng (Gradle, script, spec).
 5. Dùng Sonnet cho bước lặp (opcode, thiết bị); Opus cho bước thiết kế (0.4, 1.3, 3.1, 4.6).
 
+## Tài liệu cần đọc cho từng bước (`game-help/`)
+
+| Bước | Đọc | Ghi chú |
+|---|---|---|
+| 1.x, 2.1–2.5 | `instruction-set.md` §1–§13 (đọc từng mục theo nhóm lệnh) | §5.1 cờ "xác nhận từ ALU" — chuẩn cho test cờ |
+| 1.4 | `basic/how-to-use-simulator.md` | Hành vi UI: Assemble & Load, Run/Step |
+| 2.4, 2.5, 3.1 | `memory/memory-controller.md` | `.BANK`, CALL/RET/INT/IRET mang theo bank |
+| 3.2 | `timing.md` | FRAME_COUNT, UPTIME_MS, GPT, RTC, WAIT+VBlank |
+| 3.3 | `memory/dma-controller.md` | 1D/2D, SKIP_ZERO, BUSY |
+| 3.4 | `videos/text-mode.md`, `videos/video-controller.md` §1–§3 | VRAM tách riêng, vblank |
+| 3.5 | `io.md` | KEY_GETCHAR, KEY_PRESSED_0-7, KEY_EVENT_QUEUE |
+| 4.2 | `videos/ppu.md` | Có layer 2, line scroll, Mode 7, blending — kiểm JS có chưa |
+| 4.3 | `videos/vdp.md` | |
+| 4.4 | `speaker.md` | |
+| 4.5 | `audio.md` | ADSR, portamento, PWM, noise, sequencer |
+| 5.3 | `robot-arm.md` | |
+| 5.4–5.5 | `voxel.md` (theo mục: §2–§3 rồi §6–§9 ở 5.4; §10–§14 ở 5.5) | 67 KB — không đọc trọn |
+| Lời trong app / bài học | `basic/getting-started.md` | Có thể dịch làm màn hình hướng dẫn |
+
 ## M0 — Chuẩn và project
 - [x] **0.1** Chạy `node verify-media.cjs`, `verify-actors.cjs` trên bản tham chiếu, ghi kết quả vào `docs/parity.md`. `git init`.
-- [ ] **0.2** Đọc `assembler.js` + `cpu.js` một lần → `spec/isa.md` (47 opcode: mã, toán hạng, cờ từng lệnh; cú pháp; mã hóa 6 byte; PBIN; chỗ chưa rõ như indexed).
-- [ ] **0.3** Đọc `devices.js`, `media.js`, `world.js`, `mod-device.js` → `spec/mmio.md`, `spec/media.md`, `spec/world.md`. Script `tools/reference/export-campaign.cjs` xuất 177 nhiệm vụ/307 điều kiện → `app/src/main/assets/campaign.json` (+ `lessons.json`).
+- [ ] **0.2** `spec/isa.md`: lấy bảng lệnh/cờ/chế độ địa chỉ từ `game-help/instruction-set.md` (§2, §3, §5.1, §13); chỉ `grep` `assembler.js`/`cpu.js` để bổ sung **mã opcode, mã hóa 6 byte, PBIN**. Ghi chỗ manual và JS khác nhau.
+- [ ] **0.3** `spec/mmio.md`: **một bảng địa chỉ MMIO duy nhất** gom từ các mục "Register reference" của game-help (+ `grep` hằng số trong JS để kiểm). Không viết lại phần mô tả — các bước sau đọc thẳng mục manual. Script `tools/reference/export-campaign.cjs` xuất 177 nhiệm vụ/307 điều kiện → `app/src/main/assets/campaign.json` (+ `lessons.json`).
 - [ ] **0.4** Gradle Wrapper, `:core` + `:app` rỗng (Activity "Hello"), `gradlew.bat :core:test :app:assembleDebug` chạy được. `tools/reference/trace.cjs` tạo trace JSON từng bước cho bài tổng → `fixtures/sum4.trace.json`.
 
 ## M1 — Vòng lặp tính tổng trên điện thoại

@@ -3,7 +3,8 @@
 Nguồn tham chiếu: `../old-source/Bitdesk-Android/` — ZIP SHA-256 `5B58525476C8CF00CE1139707E9F04F360CA85F57EAB2CF961EE7A357E126205`.
 Môi trường đối chiếu (2026-11-25): Node v26.13.1, Windows 11.
 
-Nguồn bằng chứng: **D** = tài liệu/README, **B** = hành vi Bitdesk JS (có test), **W** = đã quan sát trong PlayASM Windows.
+Manual game gốc: `game-help/` (15 tệp, ~235 KB, thêm 2026-11-25) — nguồn **D** chính.
+Nguồn bằng chứng: **D** = manual game-help / README, **B** = hành vi Bitdesk JS (có test), **W** = đã quan sát trong PlayASM Windows.
 
 ## Kết quả bộ kiểm tra gốc (bước 0.1)
 
@@ -23,7 +24,7 @@ Nguồn bằng chứng: **D** = tài liệu/README, **B** = hành vi Bitdesk JS 
 | Bank / stack / ngắt | B | — | ⬜ | ⬜ | |
 | MMIO, timer, RTC, DMA | B | — | ⬜ | ⬜ | Thời gian ngoại vi chưa đối chiếu W |
 | Text 40×25, bàn phím | B | verify-media (TEXT) | ⬜ | ⬜ | |
-| PPU / VDP | B | verify-media | ⬜ | ⬜ | |
+| PPU / VDP | D, B | verify-media | ⬜ | ⬜ | Manual có layer 2, line scroll, Mode 7, blending — chưa rõ JS có đủ |
 | Âm thanh PCM | B | verify-media | ⬜ | ⬜ | |
 | Robot | B | verify-media | ⬜ | ⬜ | README: tham số vật lý là giá trị mô phỏng riêng |
 | Voxel / actor | B | verify-media, verify-actors | ⬜ | ⬜ | Như trên |
