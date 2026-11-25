@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>Bitdesk — Phòng máy ASM</title>
+  <meta name="description" content="Máy tính ảo 16-bit để viết hợp ngữ, chạy từng lệnh và học đọc thanh ghi trên trình duyệt.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='8' fill='%235842b6'/%3E%3Cpath fill='none' stroke='%23e3fa95' stroke-width='4' d='m6 19 6-6 6 6 6-6 6 6M6 25l6-6 6 6 6-6 6 6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./lessons.js"></script>
+  <script defer src="./cpu.js"></script>
+  <script defer src="./ui.js"></script>
+</head>
+<body>
+  <header class="top"><div class="top-inner">
+    <a href="#workspace" class="brand" aria-label="Bitdesk, về bàn thực hành"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>Bitdesk</a>
+    <nav aria-label="Điều hướng"><a class="nav-link current" href="#workspace"><i data-icon="layout"></i>Giả lập</a><button class="nav-link" data-open="reference"><i data-icon="book"></i>Tập lệnh</button></nav>
+    <button class="guide-link" data-open="guide"><i data-icon="help"></i><span>Hướng dẫn</span></button>
+  </div></header>
+  <main id="workspace">
+    <section class="hero"><div><div class="spec"><span class="spec-dot"></span> CPU 16-BIT <span class="slash">/</span> RAM 64 KiB</div>
+      <h1>Phòng máy ASM<span>.</span></h1><p>Viết hợp ngữ, chạy từng lệnh và quan sát bên trong CPU.</p>
+    </div><canvas id="circuit" aria-hidden="true"></canvas></section>
+    <section class="toolbar" aria-label="Điều khiển CPU">
+      <div class="actions"><button id="run" class="button primary"><i data-icon="play"></i><span>Chạy</span></button><button id="step" class="button"><i data-icon="step"></i>Từng bước</button><button id="reset" class="button icon-only" title="Đặt lại CPU" aria-label="Đặt lại CPU"><i data-icon="reset"></i></button></div>
+      <div class="controls-right"><label class="speed" for="speed"><i data-icon="speed"></i><span>Tốc độ</span><select id="speed"><option value="1">1 Hz</option><option value="4" selected>4 Hz</option><option value="16">16 Hz</option><option value="60">60 Hz</option></select></label><span class="status" id="status" role="status">Sẵn sàng</span></div>
+    </section>
+    <div class="workspace-grid">
+      <section class="panel editor-panel" aria-labelledby="editor-heading">
+        <div class="panel-head"><h2 id="editor-heading"><i data-icon="code"></i>Mã nguồn</h2><button class="sub-button" data-open="examples"><i data-icon="folder"></i>Bài mẫu<i data-icon="down"></i></button></div>
+        <div class="editor-tab"><span><span class="file-dot"></span><span id="filename">sum.asm</span></span><span class="file-type">Assembly</span></div>
+        <div class="editor-body"><div id="gutter" aria-label="Điểm dừng theo dòng"><div id="gutter-lines"></div></div><div class="code-area"><pre id="highlight" aria-hidden="true"></pre><textarea id="source" aria-label="Mã nguồn hợp ngữ" wrap="off" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea></div></div>
+        <div class="editor-foot"><span><i data-icon="cursor"></i><span id="cursor-pos">Dòng 1, cột 1</span></span><span id="saved">Lưu trên thiết bị</span></div>
+      </section>
+      <section class="panel inspector" aria-label="Theo dõi CPU">
+        <div class="panel-head"><div class="tabbar" role="tablist" aria-label="Bộ kiểm tra CPU"><button class="tab active" role="tab" aria-selected="true" aria-controls="registers-pane" id="reg-tab"><i data-icon="cpu"></i>Thanh ghi</button><button class="tab" role="tab" aria-selected="false" aria-controls="ram-pane" id="ram-tab"><i data-icon="memory"></i>Bộ nhớ</button></div></div>
+        <div id="registers-pane" role="tabpanel" aria-labelledby="reg-tab"><div class="register-scroll"><table class="registers"><thead><tr><th>REG</th><th>HEX</th><th>DEC</th><th>BIN</th></tr></thead><tbody id="reg-body"></tbody></table></div>
+        <div class="page-controls"><span id="reg-range">R0 – R7</span><div><button id="reg-prev" class="tiny-btn" aria-label="Nhóm thanh ghi trước"><i data-icon="left"></i></button><button id="reg-next" class="tiny-btn" aria-label="Nhóm thanh ghi sau"><i data-icon="right"></i></button></div></div></div>
+        <div id="ram-pane" role="tabpanel" aria-labelledby="ram-tab" hidden><form id="mem-form"><label for="mem-address">Địa chỉ HEX</label><input id="mem-address" value="0x0000" maxlength="6" spellcheck="false"><button class="sub-button">Xem</button></form><div class="memory-scroll"><table class="memory"><thead id="mem-head"></thead><tbody id="mem-body"></tbody></table></div><div class="page-controls"><span id="mem-range"></span><div><button id="mem-prev" class="tiny-btn" aria-label="Trang bộ nhớ trước"><i data-icon="left"></i></button><button id="mem-next" class="tiny-btn" aria-label="Trang bộ nhớ sau"><i data-icon="right"></i></button></div></div></div>
+        <div class="flags"><span class="pair" title="Bộ đếm chương trình">PC <b id="pc">0x0000</b></span><span class="pair" title="Con trỏ ngăn xếp">SP <b id="sp">0x8000</b></span><div id="flag-bits" aria-label="Các cờ CPU"></div></div>
+      </section>
+      <section class="panel output-panel"><div class="panel-head"><div class="tabbar" role="tablist" aria-label="Đầu ra máy tính"><button class="tab active" id="trace-tab" role="tab" aria-selected="true" aria-controls="trace"><i data-icon="activity"></i>Nhật ký</button><button class="tab" id="terminal-tab" role="tab" aria-selected="false" aria-controls="terminal-pane"><i data-icon="terminal"></i>Terminal</button></div><span class="count" id="steps">0 lệnh</span></div><div id="trace" class="trace" role="tabpanel" aria-labelledby="trace-tab"></div><div id="terminal-pane" class="terminal" role="tabpanel" aria-labelledby="terminal-tab" hidden><pre id="terminal"></pre></div></section>
+      <section class="panel bits-panel"><div class="panel-head"><h2><i data-icon="bits"></i>Kính soi bit</h2><label class="reg-picker">Thanh ghi <select id="bit-reg" aria-label="Thanh ghi cần soi"></select></label></div>
+        <div class="bit-content"><div class="bit-label"><span>BIT 15</span><span>BIT 0</span></div><div id="bits"></div><div id="bit-summary"></div></div>
+      </section>
+    </div>
+  </main>
+  <dialog id="modal" aria-labelledby="modal-heading"><div class="dialog-head"><h2 id="modal-heading"></h2><button id="close-modal" class="tiny-btn" aria-label="Đóng"><i data-icon="close"></i></button></div><div id="modal-body"></div></dialog>
+</body>
+</html>
