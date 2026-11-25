@@ -56,3 +56,9 @@ HLT        ; R0 = 10
 ## Giấy phép
 
 Mã nguồn trong repo này chỉ dùng cho mục đích học tập cá nhân. Tài liệu và tài nguyên của trò chơi gốc không thuộc phạm vi giấy phép của project này.
+
+
+## From snoweee:
+
+Hãy mua game ủng hộ tác giả nếu bạn thích khoa học máy tính và lập trình giống mình
+https://store.steampowered.com/app/5424530/PlayASM/
