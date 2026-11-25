@@ -1,7 +1,7 @@
 # Bitdesk Native — Kế hoạch theo bước nhỏ (Java)
 
 Nguồn yêu cầu: kế hoạch bàn giao gốc (M0–M6). Bản này thay **Kotlin → Java 17**, **Compose → Android View/Canvas**,
-và chia mỗi mốc thành các bước nhỏ; **mỗi bước = 1 phiên Claude** (mở phiên mới, đọc `PROGRESS.md` + đúng file `spec/` cần).
+và chia mỗi mốc thành các bước nhỏ; **mỗi bước = 1 phiên Claude** (mở phiên mới, đọc `docs/PROGRESS.md` + đúng file `docs/spec/` cần).
 
 ## Quyết định kỹ thuật
 
@@ -13,18 +13,18 @@ và chia mỗi mốc thành các bước nhỏ; **mỗi bước = 1 phiên Claud
 | Build | Gradle Wrapper + AGP, 2 module `:core` (java-library) và `:app` | Theo kế hoạch gốc; Java-only nên ít xung đột phiên bản |
 | JDK cho Gradle | JBR của Android Studio (`openjdk 25`). Nếu Gradle chưa hỗ trợ thì cài JDK 21 | JDK 27 mặc định quá mới |
 | Test | JUnit 5 cho `:core`; instrumented test ít, chỉ ở M6 | Lõi test nhanh trên máy tính |
-| Tham chiếu | `../old-source/Bitdesk-Android/` (đã giải nén, chỉ đọc) | Không đọc lại JS: dùng `spec/` |
+| Tham chiếu | `../old-source/Bitdesk-Android/` (đã giải nén, chỉ đọc) | Không đọc lại JS: dùng `docs/spec/` |
 | minSdk / applicationId | 26 / `dev.bitdesk.nativeapp.dev` | Cài song song bản cũ |
 
 ## Quy tắc tiết kiệm token
-1. Mỗi phiên chỉ làm **1 bước** dưới đây; cuối phiên cập nhật `PROGRESS.md` (≤10 dòng mỗi bước).
-2. **Ưu tiên `game-help/`** (hướng dẫn chính thức của game, bằng chứng loại D/W). JS gốc chỉ dùng để tra chỗ manual không nói (mã opcode, mã hóa byte, thuật toán) — bằng `grep`, không đọc cả file.
+1. Mỗi phiên chỉ làm **1 bước** dưới đây; cuối phiên cập nhật `docs/PROGRESS.md` (≤10 dòng mỗi bước).
+2. **Ưu tiên `docs/game-help/`** (hướng dẫn chính thức của game, bằng chứng loại D/W). JS gốc chỉ dùng để tra chỗ manual không nói (mã opcode, mã hóa byte, thuật toán) — bằng `grep`, không đọc cả file.
    Đọc manual **theo mục** (dùng số dòng ở bảng dưới), không đọc trọn file lớn (`voxel.md` 67 KB).
 3. Build/test với `-q`; chỉ đọc phần lỗi.
 4. Cách làm việc senior–junior (xem `CLAUDE.md`): bạn code, Claude hint theo bậc và review. Nhãn **[Bạn viết]** đánh dấu bước nên tự viết gần như 100%; các bước khác Claude có thể viết hạ tầng (Gradle, script, spec).
 5. Dùng Sonnet cho bước lặp (opcode, thiết bị); Opus cho bước thiết kế (0.4, 1.3, 3.1, 4.6).
 
-## Tài liệu cần đọc cho từng bước (`game-help/`)
+## Tài liệu cần đọc cho từng bước (`docs/game-help/`)
 
 | Bước | Đọc | Ghi chú |
 |---|---|---|
@@ -45,8 +45,8 @@ và chia mỗi mốc thành các bước nhỏ; **mỗi bước = 1 phiên Claud
 
 ## M0 — Chuẩn và project
 - [x] **0.1** Chạy `node verify-media.cjs`, `verify-actors.cjs` trên bản tham chiếu, ghi kết quả vào `docs/parity.md`. `git init`.
-- [ ] **0.2** `spec/isa.md`: lấy bảng lệnh/cờ/chế độ địa chỉ từ `game-help/instruction-set.md` (§2, §3, §5.1, §13); chỉ `grep` `assembler.js`/`cpu.js` để bổ sung **mã opcode, mã hóa 6 byte, PBIN**. Ghi chỗ manual và JS khác nhau.
-- [ ] **0.3** `spec/mmio.md`: **một bảng địa chỉ MMIO duy nhất** gom từ các mục "Register reference" của game-help (+ `grep` hằng số trong JS để kiểm). Không viết lại phần mô tả — các bước sau đọc thẳng mục manual. Script `tools/reference/export-campaign.cjs` xuất 177 nhiệm vụ/307 điều kiện → `app/src/main/assets/campaign.json` (+ `lessons.json`).
+- [ ] **0.2** `docs/spec/isa.md`: lấy bảng lệnh/cờ/chế độ địa chỉ từ `docs/game-help/instruction-set.md` (§2, §3, §5.1, §13); chỉ `grep` `assembler.js`/`cpu.js` để bổ sung **mã opcode, mã hóa 6 byte, PBIN**. Ghi chỗ manual và JS khác nhau.
+- [ ] **0.3** `docs/spec/mmio.md`: **một bảng địa chỉ MMIO duy nhất** gom từ các mục "Register reference" của game-help (+ `grep` hằng số trong JS để kiểm). Không viết lại phần mô tả — các bước sau đọc thẳng mục manual. Script `tools/reference/export-campaign.cjs` xuất 177 nhiệm vụ/307 điều kiện → `app/src/main/assets/campaign.json` (+ `lessons.json`).
 - [ ] **0.4** Gradle Wrapper, `:core` + `:app` rỗng (Activity "Hello"), `gradlew.bat :core:test :app:assembleDebug` chạy được. `tools/reference/trace.cjs` tạo trace JSON từng bước cho bài tổng → `fixtures/sum4.trace.json`.
 
 ## M1 — Vòng lặp tính tổng trên điện thoại

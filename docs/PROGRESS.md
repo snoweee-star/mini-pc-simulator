@@ -13,3 +13,6 @@
 - PLAN.md: thêm bảng "Tài liệu cần đọc" theo bước; 0.2/0.3 lấy từ manual trước, JS chỉ grep.
 - Quy tắc: manual khác JS → theo manual + test + ghi parity.md.
 - Gợi ý: thêm `.openidea/` vào `.gitignore` nếu không muốn commit cấu hình IDE.
+
+## Sắp xếp lại (2026-11-25)
+- Dồn tài liệu vào `docs/`: `PLAN.md`, `PROGRESS.md`, `game-help/`, `spec/`. Gốc repo chỉ còn mã nguồn + cấu hình (+ `README.md`, `CLAUDE.md` bắt buộc ở gốc).

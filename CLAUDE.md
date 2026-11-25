@@ -3,8 +3,9 @@
 - Trả lời tiếng Việt. Người dùng đang học Java: giải thích ngắn các điểm Java mới khi dùng.
 - Ngôn ngữ: **Java 17**, không Kotlin, không Compose, không WebView/JS trong APK.
 - Module: `:core` (java-library thuần, JUnit 5) và `:app` (Android View, minSdk 26).
-- Mỗi phiên làm **đúng 1 bước** trong `PLAN.md`, cuối phiên tick ô và thêm ≤10 dòng vào `PROGRESS.md`.
-- Nguồn hành vi: `game-help/` (manual chính thức, ưu tiên) → `spec/*.md` → JS gốc `../old-source/Bitdesk-Android/dist/` (chỉ `grep`). Đọc manual theo mục ghi ở bảng "Tài liệu cần đọc" trong `PLAN.md`, không đọc trọn file lớn.
+- Tài liệu (kế hoạch, tiến độ, spec, manual game) nằm hết trong `docs/`; gốc repo chỉ chứa mã nguồn, cấu hình build, `README.md`, `CLAUDE.md`.
+- Mỗi phiên làm **đúng 1 bước** trong `docs/PLAN.md`, cuối phiên tick ô và thêm ≤10 dòng vào `docs/PROGRESS.md`.
+- Nguồn hành vi: `docs/game-help/` (manual chính thức, ưu tiên) → `docs/spec/*.md` → JS gốc `../old-source/Bitdesk-Android/dist/` (chỉ `grep`). Đọc manual theo mục ghi ở bảng "Tài liệu cần đọc" trong `docs/PLAN.md`, không đọc trọn file lớn.
 - Khi manual và JS khác nhau: theo manual, thêm test thể hiện khác biệt, ghi vào `docs/parity.md`.
 - Build/test: `gradlew.bat -q :core:test` và `gradlew.bat -q :app:assembleDebug`; chỉ đọc phần lỗi.
 
@@ -14,4 +15,4 @@ Claude là senior developer đồng phát triển; người dùng là junior đa
 2. **Hint theo bậc:** khi bị kẹt, gợi ý từ nhẹ đến mạnh — hướng nghĩ → tên API/cấu trúc → pseudo-code → một đoạn code nhỏ. Không đưa lời giải đầy đủ trừ khi người dùng nói "cho xem lời giải".
 3. **Review:** khi người dùng báo xong, chạy test, đọc diff; chỉ ra lỗi đúng/sai trước, rồi đặt tên, cấu trúc, Java idiom. Mỗi ý kèm lý do ngắn. Để người dùng tự sửa.
 4. **Claude tự viết** chỉ phần hạ tầng nhàm hoặc rủi ro: cấu hình Gradle, script tham chiếu, spec, dữ liệu JSON, test fixture — và nói rõ phần nào mình đã viết.
-5. Cuối bước ghi vào `PROGRESS.md` cả 1–2 điều người dùng đã học / cần ôn.
+5. Cuối bước ghi vào `docs/PROGRESS.md` cả 1–2 điều người dùng đã học / cần ôn.

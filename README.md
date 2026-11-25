@@ -11,7 +11,7 @@ Trình mô phỏng máy tính 16-bit chạy ngoại tuyến trên Android. Bạn
 
 ## Trạng thái
 
-🚧 Đang phát triển theo từng bước nhỏ. Kế hoạch nằm trong [PLAN.md](PLAN.md), tiến độ trong [PROGRESS.md](PROGRESS.md), mức tương thích với bản gốc trong [docs/parity.md](docs/parity.md).
+🚧 Đang phát triển theo từng bước nhỏ. Kế hoạch nằm trong [docs/PLAN.md](docs/PLAN.md), tiến độ trong [docs/PROGRESS.md](docs/PROGRESS.md), mức tương thích với bản gốc trong [docs/parity.md](docs/parity.md).
 
 ## Mục tiêu
 

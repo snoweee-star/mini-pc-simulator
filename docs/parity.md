@@ -3,7 +3,7 @@
 Nguồn tham chiếu: `../old-source/Bitdesk-Android/` — ZIP SHA-256 `5B58525476C8CF00CE1139707E9F04F360CA85F57EAB2CF961EE7A357E126205`.
 Môi trường đối chiếu (2026-11-25): Node v26.13.1, Windows 11.
 
-Manual game gốc: `game-help/` (15 tệp, ~235 KB, thêm 2026-11-25) — nguồn **D** chính.
+Manual game gốc: `docs/game-help/` (15 tệp, ~235 KB, thêm 2026-11-25) — nguồn **D** chính.
 Nguồn bằng chứng: **D** = manual game-help / README, **B** = hành vi Bitdesk JS (có test), **W** = đã quan sát trong PlayASM Windows.
 
 ## Kết quả bộ kiểm tra gốc (bước 0.1)
@@ -30,3 +30,12 @@ Nguồn bằng chứng: **D** = manual game-help / README, **B** = hành vi Bitd
 | Voxel / actor | B | verify-media, verify-actors | ⬜ | ⬜ | Như trên |
 | Nhiệm vụ (177 / 307 điều kiện) | B | — | ⬜ | ⬜ | 29 ASM + 10 PBIN khởi đầu không có trong ZIP |
 | Mod JSON | B | — | ⬜ | ⬜ | Bản gốc chưa có cầu nối Lua |
+
+## Khác biệt manual ↔ JS về ISA (bước 0.2, chi tiết ở `docs/spec/isa.md` §7)
+
+| # | Manual (D) | JS (B) | Bản Java |
+|---|---|---|---|
+| 1 | Không có `LDR`/`STR`/`OUT` | Có (bản web, opcode tạm 0xFD/0xFE) | Bỏ |
+| 2 | Có `[Rb+Ri]` | Mode tạm `0x82`, chưa xác nhận native | Giữ 0x82, đánh dấu chưa xác minh W |
+| 3 | Địa chỉ con trỏ viết `[Rn]` | Nhận cả `Rn` không ngoặc | Chờ quyết định (isa.md §7.3) |
+| 4 | README ghi 47 lệnh | 46 tên opcode (0x00–0x2D) | Kiểm lại bảng §13 |
